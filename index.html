@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#234b36">
+  <meta name="description" content="Protótipo demonstrativo de mapeamento social e socioprodutivo para famílias da agroindústria de café especial.">
+  <title>Mapa Social Café Especial — ATER</title>
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Página inicial">
+      <span class="brand-mark">☕</span>
+      <span><strong>Mapa Social</strong><small>Café Especial · ATER</small></span>
+    </a>
+    <div class="top-actions">
+      <span id="connectionStatus" class="status-pill">Verificando conexão…</span>
+      <button id="exportBtn" class="button button-quiet" type="button">Exportar CSV</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <p class="eyebrow">PROTÓTIPO DEMONSTRATIVO · SEM DADOS REAIS</p>
+        <h1>Diagnóstico social e socioprodutivo</h1>
+        <p class="hero-copy">Um espaço de trabalho para conhecer as condições de vida, produção e as demandas das famílias, apoiando o planejamento das ações de extensão rural.</p>
+        <div class="hero-tags"><span>Até 50 famílias no piloto</span><span>Preenchimento assistido ou pelo produtor</span><span>Prioridades revisadas pela técnica</span></div>
+      </div>
+      <div class="hero-art" aria-hidden="true"><span>☕</span><i></i><b></b></div>
+    </section>
+
+    <div class="notice" role="note">
+      <strong>Importante:</strong> esta versão salva registros somente neste navegador/dispositivo. Não é uma base compartilhada, não tem login seguro e não deve receber dados pessoais ou institucionais reais. Use apenas os dados fictícios de demonstração.
+    </div>
+
+    <nav class="tabs" aria-label="Seções do sistema">
+      <button class="tab active" data-view="dashboard">Painel</button>
+      <button class="tab" data-view="form">Novo diagnóstico</button>
+      <button class="tab" data-view="families">Famílias e prioridades</button>
+      <button class="tab" data-view="guide">Guia de implantação</button>
+    </nav>
+
+    <section id="view-dashboard" class="view">
+      <div class="section-heading">
+        <div><p class="eyebrow">VISÃO GERAL</p><h2>Painel de indicadores</h2></div>
+        <span class="demo-label">Números deste dispositivo</span>
+      </div>
+      <div class="metrics">
+        <article class="metric"><span>Famílias cadastradas</span><strong id="metricFamilies">0</strong><small>Limite sugerido para o piloto: 50</small></article>
+        <article class="metric"><span>Diagnósticos completos</span><strong id="metricComplete">0</strong><small>Registros com identificação e demandas</small></article>
+        <article class="metric"><span>Demandas prioritárias</span><strong id="metricPriority">0</strong><small>Para revisão profissional</small></article>
+        <article class="metric"><span>Demandas em acompanhamento</span><strong id="metricOpen">0</strong><small>Não marcadas como concluídas</small></article>
+      </div>
+      <div class="dashboard-grid">
+        <article class="panel">
+          <div class="panel-title"><h3>Demandas registradas por eixo</h3><span class="muted">Contagem simples</span></div>
+          <div id="categoryBars" class="bars"><p class="empty">Ainda não há registros neste dispositivo.</p></div>
+        </article>
+        <article class="panel">
+          <div class="panel-title"><h3>Próximas ações</h3><span class="muted">Revisão técnica</span></div>
+          <div id="nextActions" class="action-list"><p class="empty">Cadastre um diagnóstico para começar.</p></div>
+        </article>
+      </div>
+      <p class="footnote">Os indicadores descrevem apenas os registros locais. Não representam avaliação científica validada nem classificação automática de elegibilidade a programas ou benefícios.</p>
+    </section>
+
+    <section id="view-form" class="view hidden">
+      <div class="section-heading">
+        <div><p class="eyebrow">COLETA DE INFORMAÇÕES</p><h2>Novo diagnóstico</h2><p class="muted">Preencha com a família ou registre durante a visita técnica.</p></div>
+      </div>
+      <form id="diagnosticForm">
+        <div class="form-card">
+          <h3><span>01</span> Identificação básica</h3>
+          <div class="form-grid">
+            <label>Quem está preenchendo?
+              <select name="respondent" required><option value="Produtor(a)">Produtor(a)</option><option value="Técnica">Técnica</option></select>
+            </label>
+            <label>Código da família (não use CPF)
+              <input name="familyCode" placeholder="Ex.: CAF-001" maxlength="20" required>
+            </label>
+            <label>Nome de referência fictício ou código de teste
+              <input name="reference" placeholder="No protótipo, use somente nome fictício" maxlength="80" required>
+            </label>
+            <label>Município/comunidade (usar exemplo fictício)
+              <input name="community" placeholder="Ex.: Comunidade Exemplo" maxlength="100">
+            </label>
+            <label>Número de pessoas na família
+              <input name="householdSize" type="number" min="1" max="30" value="2" required>
+            </label>
+            <label>Pessoas envolvidas no trabalho produtivo
+              <input name="workers" type="number" min="0" max="30" value="1" required>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <h3><span>02</span> Condições sociais e acesso a direitos</h3>
+          <p class="form-help">Use somente as informações necessárias à finalidade do diagnóstico. Evite registrar dados sensíveis neste protótipo.</p>
+          <div class="form-grid">
+            <label>Acesso regular à alimentação adequada
+              <select name="food"><option value="Não relatada dificuldade">Não relatada dificuldade</option><option value="Dificuldade ocasional">Dificuldade ocasional</option><option value="Dificuldade importante">Dificuldade importante</option><option value="Não informado">Prefere não informar / não informado</option></select>
+            </label>
+            <label>Acesso a serviços públicos
+              <select name="services"><option value="Sem barreira relatada">Sem barreira relatada</option><option value="Alguma dificuldade">Alguma dificuldade</option><option value="Barreira importante">Barreira importante</option><option value="Não informado">Não informado</option></select>
+            </label>
+            <label>Acesso a direitos e políticas públicas
+              <select name="rights"><option value="Sem demanda identificada">Sem demanda identificada</option><option value="Precisa de orientação">Precisa de orientação</option><option value="Barreira importante">Barreira importante</option><option value="Não informado">Não informado</option></select>
+            </label>
+            <label>Condições de infraestrutura essencial
+              <select name="infrastructure"><option value="Adequadas segundo relato">Adequadas segundo relato</option><option value="Requer melhoria">Requer melhoria</option><option value="Problema importante">Problema importante</option><option value="Não informado">Não informado</option></select>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <h3><span>03</span> Caracterização socioprodutiva</h3>
+          <div class="form-grid">
+            <label>Área cultivada com café (hectares)
+              <input name="coffeeArea" type="number" min="0" step="0.01" placeholder="Opcional">
+            </label>
+            <label>Produção anual aproximada (kg)
+              <input name="productionKg" type="number" min="0" step="1" placeholder="Opcional">
+            </label>
+            <label>Estrutura de processamento
+              <select name="processing"><option value="Própria">Própria</option><option value="Coletiva">Coletiva</option><option value="Terceirizada">Terceirizada</option><option value="Ainda não possui">Ainda não possui</option><option value="Não informado">Não informado</option></select>
+            </label>
+            <label>Principal canal de comercialização
+              <select name="sales"><option value="Venda direta">Venda direta</option><option value="Cooperativa/associação">Cooperativa/associação</option><option value="Intermediário">Intermediário</option><option value="Comércio eletrônico">Comércio eletrônico</option><option value="Outros / não informado">Outros / não informado</option></select>
+            </label>
+            <label class="full">Principais desafios produtivos ou comerciais
+              <textarea name="productionChallenges" rows="2" maxlength="500" placeholder="Ex.: estrutura de secagem, beneficiamento, embalagem, acesso ao mercado…"></textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <h3><span>04</span> Demandas e prioridades declaradas</h3>
+          <p class="form-help">Selecione a demanda mais relevante. O sistema sugere uma classificação inicial; a técnica deve revisar e registrar sua decisão.</p>
+          <div class="form-grid">
+            <label>Categoria principal
+              <select name="category" required>
+                <option value="Social e acesso a direitos">Social e acesso a direitos</option>
+                <option value="Produção e processamento">Produção e processamento</option>
+                <option value="Comercialização">Comercialização</option>
+                <option value="Organização coletiva">Organização coletiva</option>
+                <option value="Infraestrutura">Infraestrutura</option>
+                <option value="Formação e assistência técnica">Formação e assistência técnica</option>
+              </select>
+            </label>
+            <label>Urgência relatada
+              <select name="urgency" required><option value="0">Sem urgência identificada (0)</option><option value="1">Precisa de atenção planejada (1)</option><option value="2">Precisa de resposta rápida (2)</option></select>
+            </label>
+            <label>Impacto nas condições de vida e trabalho
+              <select name="impact" required><option value="0">Baixo impacto atual (0)</option><option value="1">Impacto moderado (1)</option><option value="2">Impacto significativo (2)</option></select>
+            </label>
+            <label>Barreira de acesso a direitos/serviços
+              <select name="barrier" required><option value="0">Sem barreira identificada (0)</option><option value="1">Dificuldade parcial (1)</option><option value="2">Barreira importante (2)</option></select>
+            </label>
+            <label>Persistência da demanda
+              <select name="persistence" required><option value="0">Recente ou pontual (0)</option><option value="1">Recorrente (1)</option><option value="2">Persistente sem solução (2)</option></select>
+            </label>
+            <label>Prazo inicial sugerido
+              <select name="deadline"><option value="Avaliar imediatamente">Avaliar imediatamente</option><option value="Até 30 dias">Até 30 dias</option><option value="Até 90 dias">Até 90 dias</option><option value="Planejamento coletivo">Planejamento coletivo</option><option value="A definir com a família">A definir com a família</option></select>
+            </label>
+            <label class="full">Demanda descrita pela família
+              <textarea name="demand" rows="3" maxlength="800" placeholder="Registre a necessidade com linguagem respeitosa, sem dados pessoais desnecessários." required></textarea>
+            </label>
+            <label class="full">Ação inicial acordada
+              <textarea name="action" rows="2" maxlength="500" placeholder="Ex.: orientar sobre serviço, agendar visita, verificar possibilidade de ação coletiva…"></textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <h3><span>05</span> Revisão profissional</h3>
+          <div class="form-grid">
+            <label>Revisão da técnica
+              <select name="review"><option value="Pendente de revisão">Pendente de revisão</option><option value="Revisada — manter prioridade">Revisada — manter prioridade</option><option value="Revisada — ajustar prioridade">Revisada — ajustar prioridade</option><option value="Encaminhada para avaliação específica">Encaminhada para avaliação específica</option></select>
+            </label>
+            <label>Status da demanda
+              <select name="status"><option value="Aberta">Aberta</option><option value="Em acompanhamento">Em acompanhamento</option><option value="Encaminhada">Encaminhada</option><option value="Concluída">Concluída</option></select>
+            </label>
+            <label class="full">Observação técnica não sensível
+              <textarea name="technicalNote" rows="2" maxlength="500" placeholder="Não registre dados pessoais sensíveis neste protótipo."></textarea>
+            </label>
+          </div>
+        </div>
+        <div class="form-actions"><button class="button button-primary" type="submit">Salvar no dispositivo</button><button class="button button-quiet" type="reset">Limpar formulário</button></div>
+        <p class="form-help">“Salvar no dispositivo” grava somente no armazenamento local deste navegador. Para compartilhar entre produtor e técnica será necessária uma base autorizada e protegida.</p>
+      </form>
+    </section>
+
+    <section id="view-families" class="view hidden">
+      <div class="section-heading">
+        <div><p class="eyebrow">ACOMPANHAMENTO</p><h2>Famílias e prioridades</h2><p class="muted">Revise cada sugestão antes de planejar o atendimento.</p></div>
+        <button id="demoBtn" class="button button-secondary" type="button">Carregar exemplos fictícios</button>
+      </div>
+      <div class="filters">
+        <input id="searchInput" type="search" placeholder="Buscar por código, referência fictícia ou comunidade" aria-label="Buscar famílias">
+        <select id="statusFilter" aria-label="Filtrar por status"><option value="">Todos os status</option><option>Aberta</option><option>Em acompanhamento</option><option>Encaminhada</option><option>Concluída</option></select>
+      </div>
+      <div id="familyList" class="family-list"><p class="empty">Nenhum registro local. Você pode preencher um diagnóstico ou carregar exemplos fictícios.</p></div>
+    </section>
+
+    <section id="view-guide" class="view hidden">
+      <div class="section-heading"><div><p class="eyebrow">ANTES DE USAR</p><h2>Guia de implantação</h2></div></div>
+      <div class="guide-grid">
+        <article class="panel"><h3>1. Testar com segurança</h3><p>Use nomes e situações inteiramente fictícios. Confira a clareza das perguntas e o funcionamento em celular e computador.</p></article>
+        <article class="panel"><h3>2. Validar institucionalmente</h3><p>Consulte a TI e a área responsável por proteção de dados do IDR-Paraná antes de escolher hospedagem, autenticação e banco de dados.</p></article>
+        <article class="panel"><h3>3. Planejar o modo offline</h3><p>Esta página pode armazenar registros localmente no navegador. O service worker permite abrir a interface após o primeiro carregamento online, em hospedagem HTTPS compatível. A sincronização entre dispositivos ainda não existe.</p></article>
+        <article class="panel"><h3>4. Criar uma versão real</h3><p>Será necessário um backend ou serviço de dados autorizado, autenticação, regras de acesso, política de retenção, cópias de segurança e testes de segurança.</p></article>
+      </div>
+      <div class="notice"><strong>Não use este protótipo para decisões automatizadas.</strong> A pontuação é uma referência demonstrativa, não uma escala validada. Riscos imediatos e violações de direitos exigem avaliação profissional independente da pontuação. A técnica deve revisar, justificar e registrar a prioridade.</div>
+      <div class="panel"><h3>Limites desta versão</h3><ul><li>Não há login nem controle de acesso.</li><li>Os dados ficam apenas no navegador usado para preencher.</li><li>Não há sincronização entre produtores e técnica.</li><li>Não há envio real de formulários para servidor.</li><li>Não há coleta GPS nem mapa geográfico.</li><li>Não deve receber dados reais, sensíveis ou institucionais.</li></ul></div>
+    </section>
+
+    <footer class="footer">Mapa Social Café Especial — ATER · Protótipo para validação metodológica · Não autorizado para dados reais</footer>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

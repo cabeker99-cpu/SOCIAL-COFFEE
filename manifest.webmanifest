@@ -1,0 +1,11 @@
+{
+  "name": "Mapa Social Café Especial — ATER",
+  "short_name": "Mapa Social Café",
+  "description": "Protótipo demonstrativo de mapeamento social e socioprodutivo.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f6f0",
+  "theme_color": "#234b36",
+  "lang": "pt-BR"
+}
